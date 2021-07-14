@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="challenge">
+    <h2 class="form-signin-heading">Verify your account</h2>
+    <div class="form-group" th:object="${challengeQuestion}">
+      <select class="form-control" th:field="*{question}">
+        <option th:each="key,value : ${challengeQuestionList}" th:value="${value.index}" th:text="${value.current}" />
+      </select>
+      <input type="text" id="challengeQuestionAnswer" th:field="*{answer}" class="form-control" placeholder="Security question answer"/>
+    </div>
+    <div id="globalError" class="alert alert-danger col-sm-12" style="display:none">error</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"/>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: nav"/>
+
+<div class="container">
+
+  <form method="POST" class="form-signin" th:object="${resetForm}" th:action="@{/reset}">
+    <h2 class="form-signin-heading">Reset your password</h2>
+    <div th:replace="fragments/credentials :: credentials"/>
+
+    <div class="form-group">
+        <input id="matchPassword" type="password" class="form-control" placeholder="Confirm Password"/>
+    </div>
+    <div th:replace="fragments/challenge :: challenge"/>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+<script th:inline="javascript">
+let errormsg = ["Username is blank", "Passwords don't match", "Challenge answer is blank"];
+
+$(document).ready(function () {
+    $('form').submit(function(event) {
+      if ($("#username").val() == '') {
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[0]);
+      }
+      else if ($("#password").val() != $("#matchPassword").val()){
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[1]);
+      }
+      else if ($("#challengeQuestionAnswer").val() == ''){
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[2]);
+      }
+    });
+
+    $(":password").keyup(function(){
+      if ($("#username").val() == '') {
+          $("#globalError").show().html(errormsg[0]);
+      }
+      else if ($("#password").val() != $("#matchPassword").val()){
+          $("#globalError").show().html(errormsg[1]);
+      }
+      else if ($("#challengeQuestionAnswer").val() == ''){
+          $("#globalError").show().html(errormsg[2]);
+      }
+      else{
+          $("#globalError").html("").hide();
+      }
+    });
+});
+
+</script>
+
+</body>
+</html>

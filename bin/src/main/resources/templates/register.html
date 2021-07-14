@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="fragments/header :: header"/>
+</head>
+
+<body>
+
+<div th:replace="fragments/nav :: nav"/>
+
+<div class="container">
+
+  <form method="POST" class="form-signin" th:object="${userForm}" th:action="@{/register}">
+    <h2 class="form-signin-heading">Create your account</h2>
+    <div th:replace="fragments/credentials :: credentials"/>
+    <div th:replace="fragments/challenge :: challenge"/>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+  </form>
+</div>
+
+<!-- /.container -->
+
+<div th:replace="fragments/footer :: footer"/>
+<script th:inline="javascript">
+let errormsg = ["Username is blank", "Passwords is blank", "Challenge answer is blank"];
+
+$(document).ready(function () {
+    $('form').submit(function(event) {
+      if ($("#username").val() == '') {
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[0]);
+      }
+      else if ($("#password").val() == ''){
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[1]);
+      }
+      else if ($("#challengeQuestionAnswer").val() == ''){
+          event.preventDefault();
+          $("#globalError").show().html(errormsg[2]);
+      }
+    });
+});
+
+</script>
+</body>
+</html>
